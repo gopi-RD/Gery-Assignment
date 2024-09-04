@@ -10,7 +10,6 @@ import {Container,EventListItems,EventItem,EventDate,EventTitle,Heading,LoadingC
 
 const Events =()=>{
     const [loading,setLoading]=useState(true) 
-    const [eventData,setEventData]=useState([])  
 
     return (
 
@@ -19,7 +18,7 @@ const Events =()=>{
                 value=>{
                     const {eventList} = value 
                     setLoading(false)
-                    setEventData(eventList) 
+                    
                    
                   
                     
@@ -31,7 +30,7 @@ const Events =()=>{
             {loading===true? (<LoadingContainer> <Loading type="ThreeDots" color="white" height={100} width={100} /></LoadingContainer> ):
              (<EventListItems>
              <Heading>Events:</Heading>
-             {eventData.map(event=>(
+             {eventList.map(event=>(
                  <EventItem key={event.id}> 
                  <EventLink to={`events/${event.id}`}>
                      <EventTitle>
