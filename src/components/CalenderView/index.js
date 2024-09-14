@@ -9,7 +9,7 @@ import {BgContainer,SelectedDate,Heading,Container,FormContainer,CustomButton,La
 
 
 class CalenderView extends Component{
-    state={date:new Date(),isEvent:false,title:"",description:"",isError:false,errorMsg:""}
+    state={date:new Date(),isEvent:false,title:"",description:"",isError:false,errorMsg:"",startTime:"10",endTime:"12"}
 
     onChangeDate=(value)=>{
         this.setState({date:value,isEvent:true}) 
@@ -21,6 +21,14 @@ class CalenderView extends Component{
 
     onEventDescription=(event)=>{
         this.setState({description:event.target.value})
+    }
+    onEndTime=(event)=>{
+        this.setState({endTime:event.target.value}) 
+
+    }
+
+    onStartTime=(event)=>{
+        this.setState({startTime:event.target.value})
     }
 
     
@@ -35,7 +43,7 @@ class CalenderView extends Component{
 
                     const onAddEvent=(event)=>{
                         event.preventDefault()
-                        const {title,description,date}=this.state 
+                        const {title,description,date,startTime,endTime}=this.state 
                         if (title===""){
                             this.setState({isError:true,errorMsg:"Event Title is required"})
                             return
@@ -45,8 +53,9 @@ class CalenderView extends Component{
                             return
                         }
                 
-                        const eventData={id:uuidv4(),title,description,date}
-                        addEvent(eventData)
+                        const eventData={id:uuidv4(),title,description,date,startTime,endTime}
+                        addEvent(eventData) 
+                        console.log(eventData)
                         this.setState({isEvent:false,errorMsg:""})
                     }
                 
@@ -55,7 +64,7 @@ class CalenderView extends Component{
                     }
                 
                    const formContainerEvent=()=>{
-                        const {isError,errorMsg,title,description} = this.state
+                        const {isError,errorMsg,title,description,startTime,endTime} = this.state
                         return(
                             <>
                             <PopupContainer>
@@ -63,7 +72,11 @@ class CalenderView extends Component{
                             <LabelText>Event Title</LabelText> 
                             <CustomInput type="text" value={title} placeholder="Enter a Event Title" onChange={this.onEventTitle} />
                             <LabelText>Event Description</LabelText>
-                            <Textarea type="text" value={description} placeholder="Enter a Event Content" rows="4" cols="45" onChange={this.onEventDescription} ></Textarea>
+                            <Textarea type="text" value={description} placeholder="Enter a Event Content" rows="4" cols="45" onChange={this.onEventDescription} ></Textarea> 
+                            <LabelText>Start Time</LabelText>
+                            <CustomInput type="hour" value={startTime} onChange={this.onStartTime}></CustomInput> 
+                            <LabelText>End Time</LabelText> 
+                            <CustomInput type="hour"  value={endTime}  onChange={this.onEndTime}></CustomInput> 
                             <ButtonsContainer>
                             <CustomButton type="submit">
                                 Add Event 

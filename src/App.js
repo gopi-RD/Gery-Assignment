@@ -4,7 +4,7 @@ import { GlobalStyle } from "./styledComponent";
 import CalenderView from "./components/CalenderView"
 import EventContext from "./context/EventContext"
 import Events from "./components/Events";
-import EventDetailedView from "./components/EventDetailedView";
+
 
 const eventData=[
   {
@@ -27,16 +27,17 @@ const eventData=[
 
 class App extends Component{
 
-  state={eventList:eventData}
+  state={eventList:[]}
 
   addEvent=(data)=>{
     this.setState(prevState=>({
       eventList:[...prevState.eventList,data]
     }))
-  }
+  } 
 
   render(){
-    const {eventList} = this.state;
+    const {eventList} = this.state; 
+    console.log(eventList)
   return (
     <EventContext.Provider value={{eventList, addEvent:this.addEvent}}>
  
@@ -47,7 +48,6 @@ class App extends Component{
    <Switch>
     <Route exact path="/" component={CalenderView} />
     <Route exact path="/events" component={Events}/>
-    <Route  exact path="/events/:id" component={EventDetailedView}  />
    </Switch>
    
    </BrowserRouter>
